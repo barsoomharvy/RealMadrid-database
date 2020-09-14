@@ -1,0 +1,249 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE Players(playerId integer primary key, name text not null, position text, nationality text, yearsWithClub integer, salary integer, matchesPlayed integer, redCards integer, yellowCards integer,
+Constraint playerId check (playerId between 0 and 99),
+Constraint position check (position in('GK', 'CB', 'LB', 'RB', 'CM', 'LM', 'RM', 'DM', 'CAM', 'LW', 'RW', 'ST')),
+Constraint yearsWithClub check(yearsWithClub > -1),
+Constraint salary check(salary > 0),
+Constraint matchesPlayed check (matchesPlayed > 0),
+Constraint redCards check (redCards > -1),
+Constraint yellowCards check (yellowCards > -1));
+
+INSERT INTO Players VALUES(1, 'Alphonse Areola','GK','French',1,NULL,8,0,1);
+INSERT INTO PLayers VALUES(2, 'Daniel Carvajal', 'RB', 'Spanish', 7, 175000, 269, 1, 87);
+INSERT INTO PLayers VALUES(3, 'Eder Militao', 'CB', 'Brazilian', 1, NULL, 13, 0, 3);
+INSERT INTO Players VALUES(4, 'Sergio Ramos','CB','Spanish',15,200000, 606, 26, 200);
+INSERT INTO PLayers VALUES(5, 'Raphael Varane', 'CB', 'French', 9, 140000, 309, 1, 23);
+INSERT INTO PLayers VALUES(6, 'Nacho Fernandez', 'CB', 'Spanish', 10, 70000, 199, 2, 37);
+INSERT INTO PLayers VALUES(7, 'Eden Hazard', 'LW', 'Belgian', 1, 400000, 15, 0, 1);
+INSERT INTO PLayers VALUES(8, 'Toni Kroos', 'CM', 'German', 6, 200000, 266, 0, 31);
+INSERT INTO PLayers VALUES(9, 'Karim Benzema', 'ST', 'French', 11, 150000, 501, 0, 9);
+INSERT INTO PLayers VALUES(10, 'Luka Modric', 'CM', 'Croatian', 8, 180000, 333, 2, 52);
+INSERT INTO PLayers VALUES(11, 'Gareth Bale', 'LW', 'Welsh', 7, 350000, 249, 2, 24);
+INSERT INTO PLayers VALUES(12, 'Marcelo Vieira', 'LB', 'Brazilian', 14, 150000, 505, 4, 82);
+INSERT INTO Players VALUES(13, 'Thibaut Courtois','GK','Belgian',2,230000,32,0,1);
+INSERT INTO PLayers VALUES(14, 'Carlos Casemiro', 'DM', 'Brazilian', 7, 90000, 229, 1, 58);
+INSERT INTO PLayers VALUES(15, 'Federico Valverde', 'CM', 'Uruguayan', 2, NULL, 57, 1, 10);
+INSERT INTO PLayers VALUES(16, 'James Rodriguez', 'CAM', 'Columbian', 4, 200000, 24, 0, 12);
+INSERT INTO PLayers VALUES(17, 'Lucas Vazquez', 'RW', 'Spanish', 5, 60000, 201, 1, 23);
+INSERT INTO PLayers VALUES(18, 'Luca Jovic', 'ST', 'Serbian', 1, 170000, 24, 0, 2);
+INSERT INTO PLayers VALUES(20, 'Marco Asensio', 'LW', 'Spanish', 4, 90000, 38, 1, 18);
+INSERT INTO PLayers VALUES(21, 'Brahim Diaz', 'CAM', 'Spanish', 2, 60000, 18, 0, 0);
+INSERT INTO PLayers VALUES(22, 'Isco Alarcon', 'CAM', 'Spanish', 7, 120000, 300, 2, 26);
+INSERT INTO PLayers VALUES(23, 'Ferland Mendy', 'LB', 'French', 1, NULL, 22, 1, 5);
+INSERT INTO PLayers VALUES(24, 'Mariano Diaz', 'ST', 'Dominican', 3, NULL, 37, 0, 2);
+INSERT INTO PLayers VALUES(25, 'Vinicius Jr.', 'LW', 'Brazilian', 2, 40000, 59, 0, 6);
+INSERT INTO PLayers VALUES(27, 'Rodrygo Goes', 'RW', 'Brazilian', 1, 66000, 18, 0, 0);
+
+
+
+
+
+
+
+CREATE TABLE matchesByPlayer(teamAgainst text not null, goalsScored integer, datePlayed date, playerRating double(1,1), playerId integer, foreign key(playerId) references Players(playerId), 
+foreign key (datePlayed) references matchesByClub(datePlayed),
+constraint playerRating_range check (playerRating  between 1.0 and 9.9), 
+constraint goalsScored_range check (goalsScored between 0 and 20) 
+Constraint goalsScored_range check(goalsScored > -1));
+
+INSERT INTO matchesByPlayer VALUES('Osasuna',0,'2019-09-25',7.4,1);
+INSERT INTO matchesByPlayer VALUES('Alaves',0,'2019-11-30',6.9,1);
+
+
+INSERT INTO matchesByPlayer VALUES('Granada',0,'2019-10-05',6.5,1);
+INSERT INTO matchesByPlayer VALUES('Granada',2,'2019-11-13',6.0,2);
+
+INSERT INTO matchesByPlayer VALUES('PSG',2,'2019-12-20',6.9,1);
+INSERT INTO matchesByPlayer VALUES('PSG',1,'2019-12-20',7.1,2);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',6.8,3);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',8.2,4);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',6.7,5);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',7.3,6);
+INSERT INTO matchesByPlayer VALUES('PSG',1,'2019-12-20',6.7,7);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',8.0,8);
+INSERT INTO matchesByPlayer VALUES('PSG',1,'2019-12-20',7.6,9);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',9.1,10);
+INSERT INTO matchesByPlayer VALUES('PSG',0,'2019-12-20',7.7,11);
+
+INSERT INTO matchesByPlayer VALUES('Barcelona',1,'2019-11-30',7.7,11);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',7.2,10);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',7.6,8);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',6.9,12);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',7.3,3);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',6.5,1);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',6.8,4);
+INSERT INTO matchesByPlayer VALUES('Barcelona',1,'2019-11-30',7.6,7);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',8.1,6);
+INSERT INTO matchesByPlayer VALUES('Barcelona',0,'2019-11-30',6.5,5);
+
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',6.4,10);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',6.6,1);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',6.8,2);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',6.5,3);
+INSERT INTO matchesByPlayer VALUES('Valencia',1,'2019-12-30',7.3,4);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',7.1,5);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',7.6,8);
+INSERT INTO matchesByPlayer VALUES('Valencia',2,'2019-12-30',8.8,9);
+INSERT INTO matchesByPlayer VALUES('Valencia',1,'2019-12-30',6.8,12);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',6.4,21);
+INSERT INTO matchesByPlayer VALUES('Valencia',0,'2019-12-30',6.7,25);
+
+INSERT INTO matchesByPlayer VALUES('Arsenal',1,'2018-3-12',6.9,1);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',6.9,3);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',6.9,4);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',7.0,5);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',7.6,7);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',7.2,9);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',7.8,10);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',6.8,11);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',6.8,12);
+INSERT INTO matchesByPlayer VALUES('Arsenal',0,'2018-3-12',6.7,19);
+
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.8,11);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.3,2);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.6,1);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.8,5);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.3,9);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.6,23);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',5.9,14);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.9,12);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',2,'2008-4-15',7.1,10);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',7.3,8);
+INSERT INTO matchesByPlayer VALUES('Celta de Vigo',0,'2008-4-15',6.9,13);
+
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',7.1,1);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',6.4,2);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',6.7,3);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',6.8,4);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',7.7,5);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',7.3,6);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',6.3,9);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',7.3,8);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',7.6,14);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',6.9,19);
+INSERT INTO matchesByPlayer VALUES('Sevilla Futbol Club',0,'2007-9-04',5.9,23);
+
+
+
+
+
+CREATE TABLE Manager(name text not null, nationality text, salary integer, yearFrom integer, yearTo integer, managerId primary key, 
+Constraint salary_range check(salary > 0), 
+Constraint yearFrom_range check(yearFrom < yearTo), 
+Constraint yearTo_range check(yearTo > yearFrom),
+Constraint managerId_range check(managerId > -1 ));
+
+INSERT INTO Manager VALUES('Zinedine Zidane', 'French', 250000, 2016, 2019, 1);
+INSERT INTO Manager VALUES('Raphael Benitez', 'Spanish', 170000, 2015, 2016, 2);
+INSERT INTO Manager VALUES('Carlo Ancelotti', 'Italian', 200000, 2013, 2015, 3);
+INSERT INTO Manager VALUES('Jose Mourinho', 'Portugese', 150000, 2010, 2013, 4);
+INSERT INTO Manager VALUES('Manuel Pellegrini', 'Chilean', 120000, 2009, 2010, 5);
+INSERT INTO Manager VALUES('Juande Ramos', 'Spanish', 90000, 2008, 2009, 6);
+INSERT INTO Manager VALUES('Bernd Schuster', 'German', 65000, 2007, 2008, 7);
+INSERT INTO Manager VALUES('Fabio Capello', 'Italian', 75000, 2006, 2007, 8);
+INSERT INTO Manager VALUES('Juan Ramon Lopez Caro', 'Spanish', 70000, 2005, 2006, 9);
+INSERT INTO Manager VALUES('Vanderlei Luxemurgo', 'Brazilian', 50000, 2004, 2005, 10);
+INSERT INTO Manager VALUES('Carlos Queiroz', 'Portugese', 60000, 2003, 2004, 11);
+
+
+
+
+
+
+
+CREATE TABLE Stadium(stadiumName text primary key not null, audienceCapacity integer, location text, isHome bool, 
+Constraint audienceCapacity_range check(audienceCapacity between 1000 and 200000));
+
+INSERT INTO Stadium VALUES('Santiago Bernabeu',81000,'Madrid Spain',1);
+INSERT INTO Stadium VALUES('Anoeta Stadium',32300,'Donostia-San Sebastian Spain', 0);
+INSERT INTO Stadium VALUES('Balaidos Stadium',29000,'Vigo Spain', 0);
+INSERT INTO Stadium VALUES('Camp Nou',99300,'Barcelona Spain', 0);
+INSERT INTO Stadium VALUES('Estadio El Madrigal',24900,'Villarreal Spain', 0);
+INSERT INTO Stadium VALUES('Ipurua Municipal Stadium', 7000,'Eibar Spain', 0);
+INSERT INTO Stadium VALUES('Mendizorroza Stadium', 20000,'Vitoria-Gasteiz Spain', 0);
+INSERT INTO Stadium VALUES('Ramon Sanchez Pizjuan', 42500,'Seville Spain', 0);
+INSERT INTO Stadium VALUES('RCDE Stadium', 40500, 'Barcelona Spain', 0);
+INSERT INTO Stadium VALUES('San Mames', 53300, 'Bilbao Spain', 0);
+INSERT INTO Stadium VALUES('The Mestalla', 55000, 'Valencia Spain', 0);
+INSERT INTO Stadium VALUES('Wanda Metropolitano', 67700, 'Madrid Spain', 0);
+INSERT INTO Stadium VALUES('Estadio Ciudad de Valencia', 26354, 'Valencia Spain', 0);
+INSERT INTO Stadium VALUES('Anfield', 53394, 'Liverpool United-Kingdom', 0);
+INSERT INTO Stadium VALUES('Allianz Arena', 75024, 'Munich Spain', 0);
+
+
+
+
+
+
+
+CREATE TABLE matchesByClub( datePlayed date primary key, teamAgainst text not null, outcome text not null, competition text, location text, stadiumName text, goalsScored integer not null, goalsConceded integer not null, managedBy int,
+foreign key(managedBy) references manager(managerid),
+Foreign key (stadiumName) references Stadium(stadiumName),
+constraint outcome check(outcome in ('Win', 'Loose','Draw')),
+constraint goalsScored check (goalsScored >= 0),
+constraint goalsConceded check (goalsConceded >= 0));
+
+INSERT INTO matchesByClub VALUES('2019-10-05','Granada','Win','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',2,0,1);
+INSERT INTO matchesByClub VALUES('2015-08-12','Barcelona','Draw','La-Liga', 'Barcelona Spain', 'Camp Nou',2,2,2);
+INSERT INTO matchesByClub VALUES('2016-02-13','levante','Win','La-Liga', 'Valencia Spain', 'Estadio Ciudad de Valencia',3,1,2);
+INSERT INTO matchesByClub VALUES('2016-01-17','levante','Loose','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',2,4,2);
+INSERT INTO matchesByClub VALUES('2019-09-12','Atletico Madrid','Win','La-Liga', 'Madrid Spain', 'Wanda Metropolitano',3,2,1);
+INSERT INTO matchesByClub VALUES('2019-10-16','Atletico Madrid','Draw','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',3,3,1);
+INSERT INTO matchesByClub VALUES('2013-10-05','Liverpool','Win','Champions League', 'Madrid Spain', 'Santiago Bernabeu',2,0,3);
+INSERT INTO matchesByClub VALUES('2013-11-05','Liverpool','Loose','Champions League', 'Liverpool United-Kingdom', 'Anfield',1,3,3);
+INSERT INTO matchesByClub VALUES('2013-01-11','Baryen Munchen','Win','Champions League', 'Madrid Spain', 'Santiago Bernabeu',2,1,3);
+INSERT INTO matchesByClub VALUES('2012-12-13','Baryen Munchen','Loose','Champions League', 'Munich Germany', 'Allianz Arena',1,2,4);
+INSERT INTO matchesByClub VALUES('2012-10-05','Athletic Bilbao','Win','La-Liga', 'Bilbao Spain', 'San Mames',3,2,4);
+INSERT INTO matchesByClub VALUES('2010-02-14','Athletic Bilbao','Win','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',1,0,4);
+INSERT INTO matchesByClub VALUES('2009-06-05','Deportivo Alves','Draw','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',2,2,5);
+INSERT INTO matchesByClub VALUES('2009-06-12','Deportivo Alves','Win','La-Liga', 'Victoria-Gasteiz Spain', 'Mendizorroza Stadium',3,1,5);
+INSERT INTO matchesByClub VALUES('2008-04-15','Celta de Vigo','Loose','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',1,2,6);
+INSERT INTO matchesByClub VALUES('2008-04-23','Celta de Vigo','Loose','La-Liga', 'Vigo Spain', 'Balaidos Stadium',2,2,6);
+INSERT INTO matchesByClub VALUES('2007-08-23','Sevilla Futbol Club','Win','La-Liga', 'Seville Spain', 'Ramon Sanchez Pizjuan',2,0,7);
+INSERT INTO matchesByClub VALUES('2007-09-04','Sevilla Futbol Club','Draw','La-Liga', 'Madrid Spain', 'Santiago Bernabeu',0,0,7);
+INSERT INTO matchesByClub VALUES('2006-10-14','Espaynol','Loose','La-Liga', 'Barcelona Spain', 'RCDE Stadium',2,3,8);
+INSERT INTO matchesByClub VALUES('2005-08-12','Real Sociedad','Win','La-Liga', 'Donostia-San Sebastian Spain', 'Anoeta Stadium',2,0,9);
+INSERT INTO matchesByClub VALUES('2019-12-30','Valencia','Win','La-Liga', 'MAdrid Spain', 'Santiago Bernabeu',4,2,1);
+INSERT INTO matchesByClub VALUES('2019-12-31','PSG','Win','Champions League', 'Madrid Spain', 'Santiago Bernabeu',5,2,1);
+INSERT INTO matchesByClub VALUES('2018-3-12','Arsenal','Win','Champions League', 'Madrid Spain', 'Santiago Bernabeu',1,0,1);
+
+
+
+
+
+
+
+CREATE TABLE club(
+name text primary key,se
+yearEstablished date not null,
+championsLeagueWon integer,
+leagueTitlesWon integer,
+leagueCupsWon integer,
+sponsors text,
+country text not null,
+city text,
+stadiumName text,
+Foreign key(stadiumName) references Stadium(stadiumName),
+constraint championsLeagueWon check(championsLeagueWon >= 0),
+constraint leagueTitlesWon check(leagueTitlesWon >= 0),
+constraint leagueCupsWon check (leagueCupsWon >= 0));
+
+INSERT INTO club VALUES('Real Madrid','1902-03-06',13,33,6,'Fly Emirates','Spain','Madrid','Santiago Bernabeu');
+
+
+
+
+
+
+
+CREATE TABLE president(
+name text primary key,
+age integer,
+nationality text,
+yearsWithClub integer not null,
+constraint yearsWithClub check (yearsWithClub >= 0));
+
+INSERT INTO president VALUES('Florentino Perez',73,'Spanish',11);
+
+COMMIT;
